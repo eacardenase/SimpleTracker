@@ -15,7 +15,11 @@ struct ContentView: View {
         NavigationStack {
             List {
                 ForEach(habitStore.items) { item in
-                    Text(item.name)
+                    NavigationLink {
+                        HabitDetailView(item: item, habitStore: $habitStore)
+                    } label: {
+                        Label(item.name, systemImage: "\(item.count).circle")
+                    }
                 }
                 .onDelete(perform: removeItems)
             }

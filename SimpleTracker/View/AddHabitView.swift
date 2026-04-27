@@ -16,9 +16,17 @@ struct AddHabitView: View {
     var body: some View {
         NavigationStack {
             Form {
-                TextField("Name", text: $name)
+                Section {
+                    TextField("Name", text: $name)
+                }
 
-                TextField("Description", text: $description)
+                Section("Description") {
+                    TextEditor(text: $description)
+                        .containerRelativeFrame(.vertical) { size, axis in
+                            size * 0.8
+                        }
+                        .padding(.bottom)
+                }
             }
             .navigationTitle("New Habit")
             .toolbar {
@@ -30,7 +38,7 @@ struct AddHabitView: View {
                         )
 
                         habitStore.items.append(habitItem)
-                        
+
                         dismiss()
                     }
                 }
