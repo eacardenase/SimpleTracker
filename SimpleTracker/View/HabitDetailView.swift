@@ -9,41 +9,40 @@ import SwiftUI
 
 struct HabitDetailView: View {
     var item: HabitItem
-    @Binding var habitStore: HabitStore
+    @State private var itemCopy = HabitItem(name: "", description: "")
+    @Bindable var habitStore: HabitStore
     @Environment(\.dismiss) var dismiss
+
+    init(item: HabitItem, habitStore: HabitStore) {
+        self.item = item
+        self.itemCopy = item
+        self.habitStore = habitStore
+    }
 
     var body: some View {
         NavigationStack {
             VStack {
-                Text("Activity count: \(item.count)")
+                Text("Activity count: \(itemCopy.count)")
                     .font(.largeTitle.bold())
 
                 Spacer()
 
-                Text(item.name)
+                Text(itemCopy.name)
                     .font(.title)
 
-                Text(item.description)
+                Text(itemCopy.description)
 
                 Spacer()
             }
             .toolbar {
                 ToolbarItem(placement: .bottomBar) {
                     Button {
-                        let itemCopy = item
-
                         if let itemIndex = habitStore.items.firstIndex(
-                            of: itemCopy
+                            of: item
                         ) {
-                            let newItem = HabitItem(
-                                name: itemCopy.name,
-                                description: itemCopy.description,
-                                count: itemCopy.count + 1
-                            )
+                            itemCopy.count += 1
 
-                            habitStore.items[itemIndex] = newItem
-
-                            dismiss()
+                            habitStore.items[itemIndex] = itemCopy
                         }
                     } label: {
                         Label("Increment", systemImage: "plus")

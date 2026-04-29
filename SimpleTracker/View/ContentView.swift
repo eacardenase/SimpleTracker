@@ -16,7 +16,7 @@ struct ContentView: View {
             List {
                 ForEach(habitStore.items) { item in
                     NavigationLink {
-                        HabitDetailView(item: item, habitStore: $habitStore)
+                        HabitDetailView(item: item, habitStore: habitStore)
                     } label: {
                         Label(item.name, systemImage: "\(item.count).circle")
                     }

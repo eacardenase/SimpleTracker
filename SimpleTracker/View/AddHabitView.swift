@@ -13,6 +13,10 @@ struct AddHabitView: View {
     @State private var name = ""
     @State private var description = ""
 
+    var disableForm: Bool {
+        name.isEmpty || name.count < 3
+    }
+
     var body: some View {
         NavigationStack {
             Form {
@@ -41,6 +45,7 @@ struct AddHabitView: View {
 
                         dismiss()
                     }
+                    .disabled(disableForm)
                 }
 
                 ToolbarItem(placement: .navigation) {
